@@ -1,0 +1,123 @@
+﻿CHIUSURA INFRASTRUTTURA RHEV
+
+Loggarsi con le credenziali alla piattaforma attraverso la macchina Manager di RHEV in FQDN all'indirizzo:
+
+https://rhevm.dap.giustizia.it/ovirt-engine/
+
+> Virtual Machines 
+> selezionare la macchina da spegnere con tasto destro effettuare power-off (lasciare per ultima la macchina daprouter1.
+
+> Hosts selezionare e impostare gli hypervisors in modalità Manutenzione lasciando SPM per ultimo
+
+Eseguire in ssh lo spegnimento 
+
+> ssh root@10.0.255.47   (redhat)
+
+NODI
+
+> ssh root@10.0.255.12   (redhat)
+
+> ssh root@10.0.255.49   (redhat)
+
+> ssh root@10.0.255.43   (redhat)  SPM
+
+CHIUSURA DB2
+
+PRODUZIONE (ZLPROD) 
+
+collegarsi in ssh: >ssh db2inst1@10.0.255.197 DapZlinux01
+
+> db2 'force application all' (forzare l'uscita di tutte le utenze dall'istanza db2)
+NB. Prima di eseguire lo stop del DB2 assicurarsi che nessun utente è connesso, quindi ripetere il comando (db2 list applications)
+
+Procedere alla chiusura dell'istanza DB2
+
+> db2stop force
+
+Attendere fino al messaggio di chiusura DB2 (circa 15/20 minuti)
+
+Procedere al comando di spegnimento:
+
+> shutdown -h 0
+
+
+PRODUZIONE (ZLCOLL) [MACCHINE VIRTUALI]
+
+collegarsi in ssh: >ssh db2inst1@10.0.255.59 db2inst1
+
+> db2 'force application all' (forzare l'uscita di tutte le utenze dall'istanza db2)
+NB. Prima di eseguire lo stop del DB2 assicurarsi che nessun utente è connesso, quindi ripetere il comando (db2 list applications)
+
+Procedere alla chiusura dell'istanza DB2
+
+> db2stop force
+
+Attendere fino al messaggio di chiusura DB2 (circa 15/20 minuti)
+
+Procedere al comando di spegnimento:
+
+> shutdown -h 0
+
+PRODUZIONE (ZLPROD2) [MACCHINE VIRTUALI]
+
+collegarsi in ssh: >ssh db2inst1@10.0.255.17 db2inst1
+
+> db2 'force application all' (forzare l'uscita di tutte le utenze dall'istanza db2)
+NB. Prima di eseguire lo stop del DB2 assicurarsi che nessun utente è connesso, quindi ripetere il comando (db2 list applications)
+
+Procedere alla chiusura dell'istanza DB2
+
+> db2stop force
+
+Attendere fino al messaggio di chiusura DB2 (circa 15/20 minuti)
+
+Procedere al comando di spegnimento:
+
+> shutdown -h 0
+
+PRODUZIONE (ZLTEST) [MACCHINE VIRTUALI]
+
+collegarsi in ssh: >ssh db2inst1@10.0.255.48 db2inst1
+
+> db2 'force application all' (forzare l'uscita di tutte le utenze dall'istanza db2)
+NB. Prima di eseguire lo stop del DB2 assicurarsi che nessun utente è connesso, quindi ripetere il comando (db2 list applications)
+
+Procedere alla chiusura dell'istanza DB2
+
+> db2stop force
+
+Attendere fino al messaggio di chiusura DB2 (circa 15/20 minuti)
+
+Procedere al comando di spegnimento:
+
+> shutdown -h 0
+
+PRODUZIONE (ZLMON) [MACCHINE VIRTUALI]
+
+collegarsi in ssh: >ssh db2inst1@10.0.255.52 db2inst1
+
+> db2 'force application all' (forzare l'uscita di tutte le utenze dall'istanza db2)
+NB. Prima di eseguire lo stop del DB2 assicurarsi che nessun utente è connesso, quindi ripetere il comando (db2 list applications)
+
+Procedere alla chiusura dell'istanza DB2
+
+> db2stop force
+
+Attendere fino al messaggio di chiusura DB2 (circa 15/20 minuti)
+
+Procedere al comando di spegnimento:
+
+> shutdown -h 0
+
+Terminata la chiusura delle macchine accedere da Browser all'indirizzo:
+
+https://10.0.255.176/hmc/connect (sysprog) (password)
+
+> Systems Management  > Select > ZLPROD > Daily > Deactivate
+> Systems Management  > Select > ZKVM > Daily > Deactivate
+
+effettuare in ssh la chiusura delle macchine ZLPROD e ZKVM
+
+> poweroff
+
+La macchina Z13 a questo punto risulta spenta.
